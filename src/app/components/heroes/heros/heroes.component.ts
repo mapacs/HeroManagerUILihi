@@ -1,8 +1,9 @@
 import { Component, OnInit, signal, Signal } from '@angular/core';
-import { HeroesService, Hero } from '@services/heroes.service';
+import { HeroesService } from '@services/heroes.service';
 import { CommonModule } from '@angular/common';
 import { HeroCreateModalComponent } from '@components/heroes/hero-create-modal/hero-create-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Hero } from '@app/models/hero';
 
 @Component({
   selector: 'app-heroes',
@@ -16,8 +17,6 @@ export class HeroesComponent implements OnInit {
 
   readonly heroes: Signal<Hero[]> = this._heroes;
 
-  showCreateModal = false;
-
   constructor(private heroesService: HeroesService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
@@ -30,14 +29,5 @@ export class HeroesComponent implements OnInit {
 
   openCreateModal() {
     this.modalService.open(HeroCreateModalComponent, { centered: true });
-  }
-
-  handleHeroCreated() {
-    // this._heroes.update(list => [...list, newHero]);
-    this.showCreateModal = false;
-  }
-
-  closeCreateModal() {
-    this.showCreateModal = false;
   }
 }

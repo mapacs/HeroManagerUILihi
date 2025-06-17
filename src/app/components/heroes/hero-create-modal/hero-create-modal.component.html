@@ -1,1 +1,38 @@
-<p>hero-create-modal works!</p>
+<div class="modal-header">
+  <h5 class="modal-title">Create Hero</h5>
+  <button type="button" class="btn-close" (click)="cancel()"></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="modal-body">
+    <div class="mb-3">
+      <label class="form-label">Name *</label>
+      <input type="text" class="form-control" formControlName="name" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Suit Color</label>
+      <input type="text" class="form-control" formControlName="suit_color" />
+    </div>
+
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" formControlName="has_cape" />
+      <label class="form-check-label">Has cape</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" formControlName="is_retired" />
+      <label class="form-check-label">Retired</label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Last Mission</label>
+      <input type="date" class="form-control" formControlName="last_mission" />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
+  </div>
+</form>

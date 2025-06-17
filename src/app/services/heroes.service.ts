@@ -17,12 +17,10 @@ export class HeroesService {
 
   constructor(private http: HttpClient) {}
 
-  /** החזרת רשימת גיבורים כ‑Observable */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(`${this.apiBase}/heroes`);
   }
 
-  /** יצירת Hero חדש ומחזירה את ה‑Hero שנשמר */
   addHero(hero: Omit<Hero, 'id'>): Observable<Hero> {
     return this.http.post<Hero>(`${this.apiBase}/heroes`, hero);
   }

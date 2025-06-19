@@ -1,9 +1,10 @@
-import { Component, OnInit, signal, Signal } from '@angular/core';
+import { Component, effect, OnInit, signal, Signal } from '@angular/core';
 import { HeroesService } from '@services/heroes.service';
 import { CommonModule } from '@angular/common';
 import { HeroCreateModalComponent } from '@components/heroes/hero-create-modal/hero-create-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Hero } from '@app/models/hero';
+import { SocketService } from '@services/socket.service';
 
 @Component({
   selector: 'app-heroes',
@@ -17,10 +18,18 @@ export class HeroesComponent implements OnInit {
 
   readonly heroes: Signal<Hero[]> = this._heroes;
 
-  constructor(private heroesService: HeroesService, private modalService: NgbModal) {}
+  constructor(
+    private heroesService: HeroesService,
+    private modalService: NgbModal,
+    private socketService: SocketService
+  ) {}
 
   ngOnInit(): void {
     this.loadHeroes();
+
+    this.socketService.listenTo<Hero>('hero_created').subscribe(newHero => {
+      this._heroes.update(list => [...list, newHero]);
+    });
   }
 
   loadHeroes(): void {

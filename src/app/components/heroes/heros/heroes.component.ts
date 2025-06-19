@@ -22,17 +22,14 @@ export class HeroesComponent implements OnInit {
     private heroesService: HeroesService,
     private modalService: NgbModal,
     private socketService: SocketService
-  ) {
-      effect(() => {
-        const newHero = this.socketService.newHero();
-        if (newHero) {
-          this._heroes.update(list => [...list, newHero]);
-        }
-      }, { allowSignalWrites: true });
-    }
+  ) {}
 
   ngOnInit(): void {
     this.loadHeroes();
+
+    this.socketService.newHero.subscribe(newHero => {
+      this._heroes.update(list => [...list, newHero]);
+    });
   }
 
   loadHeroes(): void {

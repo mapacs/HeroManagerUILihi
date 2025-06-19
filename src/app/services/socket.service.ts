@@ -9,15 +9,24 @@ import { Observable, Subject } from 'rxjs';
 })
 export class SocketService {
   private socket: Socket;
-  private newHeroSubject = new Subject<Hero>();
-  newHero: Observable<Hero> = this.newHeroSubject.asObservable();
+  private eventSubjects = new Map<string, Subject<any>>();
+
 
   constructor() {
     this.socket = io('http://localhost:8080');
     
-    this.socket.on('hero_created', (hero: Hero) => {
-      console.log('[Socket] Hero created:', hero);
-      this.newHeroSubject.next(hero);
-    }); 
+    this.socket.onAny((eventName, payload) => {      
+        const subject = this.eventSubjects.get(eventName);
+        if (subject) {
+            subject.next(payload);
+        }
+    });
+  }
+
+  listenTo<T>(eventName: string): Observable<T> {
+    if (!this.eventSubjects.has(eventName)) {
+      this.eventSubjects.set(eventName, new Subject<T>());
+    }
+    return this.eventSubjects.get(eventName)!.asObservable();
   }
 }

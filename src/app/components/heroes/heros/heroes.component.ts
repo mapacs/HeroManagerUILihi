@@ -27,7 +27,7 @@ export class HeroesComponent implements OnInit {
   ngOnInit(): void {
     this.loadHeroes();
 
-    this.socketService.newHero.subscribe(newHero => {
+    this.socketService.listenTo<Hero>('hero_created').subscribe(newHero => {
       this._heroes.update(list => [...list, newHero]);
     });
   }

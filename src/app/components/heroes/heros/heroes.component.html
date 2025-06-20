@@ -1,0 +1,24 @@
+<div class="container py-4">
+  <h2 class="mb-4">Heroes</h2>
+  <button class="btn btn-primary mb-3" (click)="openCreateModal()">+ Add Hero</button>
+  <ul class="list-group">
+    @for (hero of heroes(); track hero.id) {
+      <li class="list-group-item">
+        <strong>{{ hero.name }}</strong> — {{ hero.suit_color }}
+        @if (hero.has_cape) {
+          <span>With Cape</span>
+        }
+        @if (!hero.has_cape) {
+          <span>No Cape</span>
+        }
+        @if (hero.is_retired) {
+          <span class="text-muted">(Retired)</span>
+        }
+    </li>
+  }
+  </ul>
+
+  <ng-template #empty>
+    <p>No heroes found.</p>
+  </ng-template>
+</div>

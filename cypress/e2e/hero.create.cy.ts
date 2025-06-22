@@ -23,6 +23,6 @@ describe('Hero creation modal', () => {
 
     cy.visit('/');
     
-    cy.contains(heroName, { timeout: 8000 }).should('be.visible');
+    cy.contains(heroName, { timeout: 1000 }).should('be.visible');
   });
 });

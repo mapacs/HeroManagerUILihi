@@ -19,8 +19,8 @@ export class HeroCreateModalComponent {
 
   form = this.fb.group({
     name: ['', Validators.required],
-    suit_color: [''],
-    has_cape: [false],
+    suit_color: ['', Validators.required],
+    has_cape: [false, Validators.required],
     last_mission: [null],
     is_retired: [false],
   });

@@ -1,24 +1,25 @@
-<div class="container py-4">
-  <h2 class="mb-4">Heroes</h2>
-  <button class="btn btn-primary mb-3" (click)="openCreateModal()">+ Add Hero</button>
-  <ul class="list-group">
+<div class="container py-4" data-cy="heroes-container">
+  <h2 class="mb-4" data-cy="heroes-title">Heroes</h2>
+  <button class="btn btn-primary mb-3" (click)="openCreateModal()" data-cy="add-hero-button">+ Add Hero</button>
+  <ul class="list-group" data-cy="heroes-list">
     @for (hero of heroes(); track hero.id) {
-      <li class="list-group-item">
-        <strong>{{ hero.name }}</strong> — {{ hero.suit_color }}
+      <li class="list-group-item" attr.data-cy="hero-item-{{hero.id}}">
+        <strong attr.data-cy="hero-name-{{hero.id}}">{{ hero.name }}</strong> — 
+        <span attr.data-cy="hero-suit-color-{{hero.id}}">{{ hero.suit_color }}</span>
         @if (hero.has_cape) {
-          <span>With Cape</span>
+          <span attr.data-cy="hero-has-cape-{{hero.id}}">With Cape</span>
         }
         @if (!hero.has_cape) {
-          <span>No Cape</span>
+          <span attr.data-cy="hero-no-cape-{{hero.id}}">No Cape</span>
         }
         @if (hero.is_retired) {
-          <span class="text-muted">(Retired)</span>
+          <span class="text-muted" attr.data-cy="hero-retired-{{hero.id}}">(Retired)</span>
         }
-    </li>
-  }
+      </li>
+    }
   </ul>
 
   <ng-template #empty>
-    <p>No heroes found.</p>
+    <p data-cy="no-heroes">No heroes found.</p>
   </ng-template>
 </div>

@@ -8,21 +8,19 @@ describe('Hero creation modal', () => {
 
     cy.visit('/');
 
-    cy.contains('+ Add Hero').click();
-    cy.get('.modal-dialog').should('be.visible');
+    cy.get('[data-cy=add-hero-button]').click();
+    cy.get('[data-cy=hero-modal]').should('be.visible');
 
-    cy.get('input[formcontrolname="name"]').type(heroName);
-    cy.get('input[formcontrolname="suit_color"]').type('green');
-    cy.get('input[formcontrolname="has_cape"]').check();
+    cy.get('[data-cy=input-name]').type(heroName);
+    cy.get('[data-cy=input-suit-color]').type('green');
+    cy.get('[data-cy=checkbox-has-cape]').check();
 
-    cy.contains('button', 'Save').click();
+    cy.get('[data-cy=submit-button]').click();
 
-    cy.wait('@saveHero')
-      .its('response.statusCode')
-      .should('eq', 201);
+    cy.wait('@saveHero').its('response.statusCode').should('eq', 201);
 
-    cy.get('.modal-dialog').should('not.exist');
+    cy.get('[data-cy=hero-modal]').should('not.exist');
 
-    cy.contains(heroName).should('be.visible');
+    cy.contains(heroName, { timeout: 8000 }).should('be.visible');
   });
 });

@@ -21,6 +21,8 @@ describe('Hero creation modal', () => {
 
     cy.get('[data-cy=hero-modal]').should('not.exist');
 
+    cy.visit('/');
+    
     cy.contains(heroName, { timeout: 8000 }).should('be.visible');
   });
 });

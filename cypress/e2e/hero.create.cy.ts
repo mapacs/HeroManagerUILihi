@@ -17,12 +17,16 @@ describe('Hero creation modal', () => {
 
     cy.get('[data-cy=submit-button]').click();
 
-    cy.wait('@saveHero').its('response.statusCode').should('eq', 201);
+    cy.wait('@saveHero').then(({ response }) => {
+        expect(response?.statusCode).to.eq(201);
+        const createdHeroId = response?.body?.id;
+        expect(createdHeroId).to.exist;
+        
+        cy.get('[data-cy=hero-modal]').should('not.exist');
 
-    cy.get('[data-cy=hero-modal]').should('not.exist');
-
-    cy.visit('/');
-    
-    cy.contains(heroName, { timeout: 1000 }).should('be.visible');
+        cy.visit('/');
+        
+        cy.get(`[data-cy=hero-name-${createdHeroId}]`).should('contain', heroName);        
+    });
   });
 });

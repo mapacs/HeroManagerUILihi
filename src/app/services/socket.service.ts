@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { Hero } from '@app/models/hero';
-import { signal } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({

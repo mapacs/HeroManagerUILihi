@@ -15,7 +15,7 @@ describe('Hero modal & list', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.intercept('GET', `${Cypress.env('apiUrl')}/heroes`, []).as('getHeroes');
-    cy.get('[data-cy="add-hero-button"]').click();
+    cy.get('[data-cy="add-hero-button"]').should('be.visible').and('not.be.disabled').click();
     cy.get('[data-cy="hero-create-modal"]').should('be.visible');
   });
 
@@ -48,7 +48,7 @@ describe('Hero modal & list', () => {
     cy.get('[data-cy="input-hero-suit-color"]').type(heroStub.suit_color);
     cy.get('[data-cy="checkbox-hero-has-cape"]').check();
 
-    cy.get('[data-cy="submit-create-hero-button"]').click();
+    cy.get('[data-cy="submit-create-hero-button"]').should('be.visible').and('not.be.disabled').click();
 
     cy.visit('/');
     cy.wait('@getHeroes'); 

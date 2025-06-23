@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" (click)="cancel()" data-cy="close-button"></button>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="save()" data-cy="hero-modal">
+<form [formGroup]="form" (ngSubmit)="save()" data-cy="hero-create-modal">
   <div class="modal-body">
     <div class="mb-3">
       <label class="form-label" for="name-input">Name</label>
@@ -13,7 +13,7 @@
         class="form-control"
         formControlName="name"
         required
-        data-cy="input-name"
+        data-cy="input-hero-name"
       />
     </div>
 
@@ -24,7 +24,7 @@
         type="text"
         class="form-control"
         formControlName="suitColor"
-        data-cy="input-suit-color"
+        data-cy="input-hero-suit-color"
       />
     </div>
 
@@ -34,7 +34,7 @@
         type="checkbox"
         class="form-check-input"
         formControlName="hasCape"
-        data-cy="checkbox-has-cape"
+        data-cy="checkbox-hero-has-cape"
       />
       <label class="form-check-label" for="has-cape-checkbox">Has cape</label>
     </div>
@@ -75,7 +75,7 @@
       type="submit"
       class="btn btn-primary"
       [disabled]="form.invalid"
-      data-cy="submit-button"
+      data-cy="submit-create-hero-button"
     >
       Save
     </button>

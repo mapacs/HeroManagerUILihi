@@ -1,6 +1,7 @@
+import { v4 as uuid } from 'uuid';
 /// <reference types="cypress" />
 
-const heroName = `Cypress Hero ${Date.now()}`;
+const heroName = `Hero ${uuid()}`;
 
 describe('Hero creation modal', () => {
   it('creates a hero and displays it in the list', () => {

@@ -11,9 +11,7 @@ export class SocketService {
 
 
   constructor() {
-    this.socket = io('http://localhost:8080', {
-        transports: ['websocket'], 
-    });
+    this.socket = io('http://localhost:8080');
     
     this.socket.onAny((eventName, payload) => {      
         const subject = this.eventSubjects.get(eventName);

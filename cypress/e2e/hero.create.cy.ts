@@ -1,33 +1,70 @@
 import { v4 as uuid } from 'uuid';
+
 /// <reference types="cypress" />
 
-const heroName = `Hero ${uuid()}`;
+const heroStub = {
+  id: Math.floor(Math.random() * 10_000),
+  name: `Hero ${uuid().slice(0, 6)}`,
+  suit_color: 'green',
+  has_cape: true,
+  is_retired: false,
+  last_mission: null,
+};
 
-describe('Hero creation modal', () => {
-  it('creates a hero and displays it in the list', () => {
-    cy.intercept('POST', `${Cypress.env('apiUrl')}/heroes`).as('saveHero');
-
+describe('Hero modal & list', () => {
+  beforeEach(() => {
     cy.visit('/');
-
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/heroes`, []).as('getHeroes');
     cy.get('[data-cy="add-hero-button"]').click();
     cy.get('[data-cy="hero-create-modal"]').should('be.visible');
+  });
 
-    cy.get('[data-cy="input-hero-name"]').type(heroName);
-    cy.get('[data-cy="input-hero-suit-color"]').type('green');
+  it('enables Save when form is valid', () => {
+    cy.get('[data-cy="input-hero-name"]').type(heroStub.name);
+    cy.get('[data-cy="input-hero-suit-color"]').type(heroStub.suit_color);
+    cy.get('[data-cy="checkbox-hero-has-cape"]').check();
+  });
+
+  it('disables Save when form is invalid', () => {
+    cy.get('[data-cy="submit-create-hero-button"]').should('be.disabled');
+  });
+
+  it('creates a hero and updates UI using intercept stub', () => {
+
+  cy.intercept(
+    'POST',
+    `${Cypress.env('apiUrl')}/heroes`,
+    (req) => {
+        expect(req.body.name).to.eq(heroStub.name);
+        req.reply({
+            statusCode: 201,
+            body: heroStub,
+        });
+    }).as('saveHero');
+
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/heroes`, [heroStub]).as('getHeroes');
+
+    cy.get('[data-cy="input-hero-name"]').type(heroStub.name);
+    cy.get('[data-cy="input-hero-suit-color"]').type(heroStub.suit_color);
     cy.get('[data-cy="checkbox-hero-has-cape"]').check();
 
     cy.get('[data-cy="submit-create-hero-button"]').click();
 
-    cy.wait('@saveHero').then(({ response }) => {
-        expect(response?.statusCode).to.eq(201);
-        const createdHeroId = response?.body?.id;
-        expect(createdHeroId).to.exist;
-        
-        cy.get('[data-cy="hero-create-modal"]').should('not.exist');
+    cy.wait('@saveHero').its('response.statusCode').should('eq', 201);
 
-        cy.visit('/');
-        
-        cy.get(`[data-cy="hero-name-${createdHeroId}"]`).should('contain', heroName);        
-    });
+    cy.visit('/');
+    cy.wait('@getHeroes'); 
+    
+    cy.get('[data-cy="hero-create-modal"]').should('not.exist');
+    console.log(heroStub.name);
+    
+    cy.get(`[data-cy="hero-name-${heroStub.id}"]`).should('contain', heroStub.name);        
+
+    cy.get(`[data-cy="hero-item-${heroStub.id}"]`)
+      .should('contain.text', heroStub.name)
+      .within(() => {
+        cy.get(`[data-cy="hero-suit-color-${heroStub.id}"]`)
+          .should('contain', heroStub.suit_color);
+      });
   });
 });

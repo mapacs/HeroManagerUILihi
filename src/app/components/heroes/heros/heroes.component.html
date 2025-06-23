@@ -4,6 +4,7 @@
   <ul class="list-group" data-cy="heroes-list">
     @for (hero of heroes(); track hero.id) {
       <li class="list-group-item" [attr.data-cy]="'hero-item-' + hero.id">
+        <strong [attr.data-cy]="'hero-id-' + hero.id">{{ hero.id }}</strong> — 
         <strong [attr.data-cy]="'hero-name-' + hero.id">{{ hero.name }}</strong> — 
         <span [attr.data-cy]="'hero-suit-color-' + hero.id">{{ hero.suit_color }}</span>
         @if (hero.hasCape) {

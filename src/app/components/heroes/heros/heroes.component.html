@@ -6,12 +6,12 @@
       <li class="list-group-item" [attr.data-cy]="'hero-item-' + hero.id">
         <strong [attr.data-cy]="'hero-id-' + hero.id">{{ hero.id }}</strong> — 
         <strong [attr.data-cy]="'hero-name-' + hero.id">{{ hero.name }}</strong> — 
-        <span [attr.data-cy]="'hero-suit-color-' + hero.id">{{ hero.suit_color }}</span>
+        <span [attr.data-cy]="'hero-suit-color-' + hero.id">{{ hero.suitColor }}</span> - 
         @if (hero.hasCape) {
-          <span [attr.data-cy]="'hero-has-cape-' + hero.id">With Cape</span>
+          <span [attr.data-cy]="'hero-has-cape-' + hero.id"> With Cape</span>
         }
         @if (!hero.hasCape) {
-          <span [attr.data-cy]="'hero-no-cape-' + hero.id">No Cape</span>
+          <span [attr.data-cy]="'hero-no-cape-' + hero.id"> No Cape</span>
         }
         @if (hero.isRetired) {
           <span class="text-muted" [attr.data-cy]="'hero-retired-' + hero.id">(Retired)</span>

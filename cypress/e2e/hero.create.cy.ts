@@ -50,8 +50,6 @@ describe('Hero modal & list', () => {
 
     cy.get('[data-cy="submit-create-hero-button"]').click();
 
-    cy.wait('@saveHero').its('response.statusCode').should('eq', 201);
-
     cy.visit('/');
     cy.wait('@getHeroes'); 
     

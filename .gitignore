@@ -42,3 +42,10 @@ testem.log
 Thumbs.db
 
 .editorconfig
+
+# Cypress test results and cache
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+.cypresscache/
+data.db

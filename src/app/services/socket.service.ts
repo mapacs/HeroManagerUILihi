@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { Hero } from '@app/models/hero';
-import { signal } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -13,7 +11,9 @@ export class SocketService {
 
 
   constructor() {
-    this.socket = io('http://localhost:8080');
+    this.socket = io('http://localhost:8080', {
+        transports: ['websocket', 'polling'], 
+    });
     
     this.socket.onAny((eventName, payload) => {      
         const subject = this.eventSubjects.get(eventName);
@@ -23,7 +23,7 @@ export class SocketService {
     });
   }
 
-  listenTo<T>(eventName: string): Observable<T> {
+listenTo<T>(eventName: string): Observable<T> {
     if (!this.eventSubjects.has(eventName)) {
       this.eventSubjects.set(eventName, new Subject<T>());
     }

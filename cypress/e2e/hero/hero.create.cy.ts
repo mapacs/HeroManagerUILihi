@@ -18,6 +18,10 @@ describe('Hero create modal', () => {
     cy.get('[data-cy="hero-create-modal"]').should('be.visible');
   });
 
+  after(() => {
+    cy.get('[data-cy="cancel-create-hero-button"]').should('be.visible').and('not.be.disabled').click();
+  })
+
   it('enables Save when form is valid', () => {
     cy.get('[data-cy="input-hero-name"]').should('be.visible').type(heroStub.name);
     cy.get('[data-cy="input-hero-suit-color"]').should('be.visible').type(heroStub.suitColor);

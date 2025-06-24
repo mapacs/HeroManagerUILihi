@@ -20,9 +20,9 @@ describe('Hero modal & list', () => {
   });
 
   it('enables Save when form is valid', () => {
-    cy.get('[data-cy="input-hero-name"]').type(heroStub.name);
-    cy.get('[data-cy="input-hero-suit-color"]').type(heroStub.suitColor);
-    cy.get('[data-cy="checkbox-hero-has-cape"]').check();
+    cy.get('[data-cy="input-hero-name"]').should('be.visible').type(heroStub.name);
+    cy.get('[data-cy="input-hero-suit-color"]').should('be.visible').type(heroStub.suitColor);
+    cy.get('[data-cy="checkbox-hero-has-cape"]').should('be.visible').check();
   });
 
   it('disables Save when form is invalid', () => {
@@ -43,9 +43,9 @@ describe('Hero modal & list', () => {
         
         cy.intercept('GET', `${Cypress.env('apiUrl')}/heroes`, [heroStub]).as('getHeroes');
 
-        cy.get('[data-cy="input-hero-name"]').type(heroStub.name);
-        cy.get('[data-cy="input-hero-suit-color"]').type(heroStub.suitColor);
-        cy.get('[data-cy="checkbox-hero-has-cape"]').check();
+        cy.get('[data-cy="input-hero-name"]').should('be.visible').type(heroStub.name);
+        cy.get('[data-cy="input-hero-suit-color"]').should('be.visible').type(heroStub.suitColor);
+        cy.get('[data-cy="checkbox-hero-has-cape"]').should('be.visible').check();
 
         cy.get('[data-cy="submit-create-hero-button"]').should('be.visible').and('not.be.disabled').click();
 

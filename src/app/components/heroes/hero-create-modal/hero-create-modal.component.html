@@ -1,0 +1,83 @@
+<div class="modal-header">
+  <h5 class="modal-title" data-cy="modal-title">Create Hero</h5>
+  <button type="button" class="btn-close" (click)="cancel()" data-cy="close-button"></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()" data-cy="hero-create-modal">
+  <div class="modal-body">
+    <div class="mb-3">
+      <label class="form-label" for="name-input">Name</label>
+      <input
+        id="name-input"
+        type="text"
+        class="form-control"
+        formControlName="name"
+        required
+        data-cy="input-hero-name"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="suit-color-input">Suit Color</label>
+      <input
+        id="suit-color-input"
+        type="text"
+        class="form-control"
+        formControlName="suitColor"
+        data-cy="input-hero-suit-color"
+      />
+    </div>
+
+    <div class="form-check mb-2">
+      <input
+        id="has-cape-checkbox"
+        type="checkbox"
+        class="form-check-input"
+        formControlName="hasCape"
+        data-cy="checkbox-hero-has-cape"
+      />
+      <label class="form-check-label" for="has-cape-checkbox">Has cape</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input
+        id="is-retired-checkbox"
+        type="checkbox"
+        class="form-check-input"
+        formControlName="isRetired"
+        data-cy="checkbox-is-retired"
+      />
+      <label class="form-check-label" for="is-retired-checkbox">Retired</label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="last-mission-input">Last Mission</label>
+      <input
+        id="last-mission-input"
+        type="date"
+        class="form-control"
+        formControlName="lastMission"
+        data-cy="input-last-mission"
+      />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="cancel()"
+      data-cy="cancel-create-hero-button"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="form.invalid"
+      data-cy="submit-create-hero-button"
+    >
+      Save
+    </button>
+  </div>
+</form>

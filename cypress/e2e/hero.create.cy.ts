@@ -6,7 +6,7 @@ const heroStub = {
   id: Math.floor(Math.random() * 10_000),
   name: `Hero ${uuid().slice(0, 6)}`,
   suitColor: 'green',
-  hasCape: 1,
+  hasCape: true,
   isRetired: false,
   lastMission: null,
 };

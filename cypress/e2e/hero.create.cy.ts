@@ -23,6 +23,7 @@ describe('Hero modal & list', () => {
     cy.get('[data-cy="input-hero-name"]').should('be.visible').type(heroStub.name);
     cy.get('[data-cy="input-hero-suit-color"]').should('be.visible').type(heroStub.suitColor);
     cy.get('[data-cy="checkbox-hero-has-cape"]').should('be.visible').check();
+    cy.get('[data-cy="submit-create-hero-button"]').should('be.visible').and('not.be.disabled');
   });
 
   it('disables Save when form is invalid', () => {
